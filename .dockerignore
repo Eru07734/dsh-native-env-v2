@@ -1,0 +1,13 @@
+.git
+node_modules
+**/node_modules
+.github
+.dsh-inspect
+.env
+.env.*
+**/*.pem
+**/*.key
+**/*.log
+**/*.bak*
+**/_token
+**/_*-report.json

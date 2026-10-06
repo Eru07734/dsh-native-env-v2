@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH Native Env v2 控制器",
+    "description": "本机控制器：管理 Peer 连接、会话级进入/退出和远端工具映射。"
+  }
+}

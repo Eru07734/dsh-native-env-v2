@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH Native Env v2 Controller",
+    "description": "Local controller for peer connections, per-session enter/exit, and remote tool shadowing."
+  }
+}

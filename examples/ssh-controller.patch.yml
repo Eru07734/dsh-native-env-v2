@@ -1,0 +1,26 @@
+# SSH authenticates and encrypts stdio; no bridge TCP token is required.
+# Install the guest's dedicated env profile with bin/guest-install.sh first.
+# Change the local plugin directory, SSH destination and remote dsh executable.
+- insert:
+    - id: native-env-v2
+      name: 'C:/dsh-plugins/dsh-native-env-v2'
+      config:
+        mode: legacy
+        protocol: auto
+        listen: []
+        peers:
+          - name: linux-remote
+            transport: ssh
+            command: ssh
+            args:
+              - '-T'
+              - '-o'
+              - 'BatchMode=yes'
+              - 'user@host.example.com'
+              - 'dsh'
+              - '--profile'
+              - 'env'
+            listTimeoutMs: 30000
+        maxMessageBytes: 4194304
+        migration: true
+# Run env_status, then env_enter with peer "linux-remote".

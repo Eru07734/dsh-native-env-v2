@@ -1,0 +1,16 @@
+{
+  "name": "dsh-native-env-v2-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Sanitized source distribution of the DSH Native Env v2 plugin and pairing relay.",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "test": "node scripts/test.mjs",
+    "check": "node scripts/check-publication.mjs",
+    "relay": "node relay/main.js"
+  },
+  "devDependencies": { "qrcode": "1.5.4" }
+}

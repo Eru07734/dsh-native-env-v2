@@ -1,0 +1,73 @@
+# dsh-native-env-relay — systemd unit.
+#
+# Install:
+#   sudo cp -r <repo> /opt/dsh-native-env-v2
+#   sudo useradd --system --home /nonexistent --shell /usr/sbin/nologin dsh-relay
+#   sudo cp /opt/dsh-native-env-v2/relay/systemd/dsh-native-env-relay.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now dsh-native-env-relay
+#   curl -s http://127.0.0.1:8931/healthz
+#
+# The unit binds LOOPBACK by default. That is a deliberate default, not an oversight:
+# this service should be reachable from the internet only through a TLS terminator,
+# so put nginx (or any TLS reverse proxy) in front and set DSH_RELAY_TRUST_PROXY=1
+# here so the per-address limits and the logs see the client's real address. See
+# relay/README.md for the nginx block.
+#
+# To serve TLS directly instead, drop the proxy and set DSH_RELAY_TLS_CERT and
+# DSH_RELAY_TLS_KEY, then set DSH_RELAY_HOST=0.0.0.0.
+
+[Unit]
+Description=dsh-native-env relay (pairing rendezvous for DeepSeek Harness)
+Documentation=file:/opt/dsh-native-env-v2/relay/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dsh-relay
+Group=dsh-relay
+
+# The relay imports the plugin's lib/ by relative path, so the working directory
+# matters: `/opt/dsh-native-env-v2` must contain BOTH `relay/` and `plugins/`.
+WorkingDirectory=/opt/dsh-native-env-v2
+
+Environment=DSH_RELAY_HOST=127.0.0.1
+Environment=DSH_RELAY_PORT=8931
+Environment=DSH_RELAY_LOG_LEVEL=info
+Environment=DSH_RELAY_TRUST_PROXY=1
+
+# Uncomment to serve TLS directly instead of behind a proxy:
+# Environment=DSH_RELAY_HOST=0.0.0.0
+# Environment=DSH_RELAY_TLS_CERT=/etc/letsencrypt/live/relay.example.com/fullchain.pem
+# Environment=DSH_RELAY_TLS_KEY=/etc/letsencrypt/live/relay.example.com/privkey.pem
+# ReadOnlyPaths=/etc/letsencrypt
+
+ExecStart=/usr/bin/node /opt/dsh-native-env-v2/relay/main.js
+
+Restart=always
+RestartSec=3
+
+# The service holds every invite in memory and writes nothing, so it can be locked
+# down hard: no home directory, no writable paths, no new privileges, and a private
+# /tmp. SIGTERM is handled (the process drops every invite and exits), so systemd's
+# default stop signal is correct.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+# V8 uses executable memory for its JIT; MemoryDenyWriteExecute is incompatible.
+RestrictRealtime=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dsh-native-env-relay
+
+[Install]
+WantedBy=multi-user.target

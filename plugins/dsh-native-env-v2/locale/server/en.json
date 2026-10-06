@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH Native Env v2 Server",
+    "description": "Remote server for the tool directory, Anchor execution context, and structured results."
+  }
+}

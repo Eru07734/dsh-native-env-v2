@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Native Env v2 公网可连",
+    "description": "通过临时公网 Quick Tunnel 暴露 v2 配对 relay；DSH Web 页面仍保持本地。"
+  }
+}

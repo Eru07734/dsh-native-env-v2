@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Native Env v2 full access",
+    "description": "Allow all serializable remote tools except the local session controls required to leave the environment."
+  }
+}

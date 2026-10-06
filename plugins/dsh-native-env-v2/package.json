@@ -1,0 +1,51 @@
+{
+  "name": "dsh-native-env-v2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH v2 native environment bridge with per-session takeover, TCP/SSH compatibility, fail-closed disconnects, and tool directory negotiation.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./lib/host.js",
+    "./controller": "./lib/host.js",
+    "./server": "./lib/guest.js",
+    "./public": "./lib/public.js",
+    "./full": "./lib/full.js",
+    "./locale/*": "./locale/controller/*",
+    "./controller/locale/*": "./locale/controller/*",
+    "./server/locale/*": "./locale/server/*",
+    "./public/locale/*": "./locale/public/*",
+    "./full/locale/*": "./locale/full/*",
+    "./guest": "./lib/guest.js",
+    "./client": "./lib/client-bundle.js",
+    "./package.json": "./package.json",
+    "./lib/*": "./lib/*"
+  },
+  "files": [
+    "lib/*.js",
+    "bin/*",
+    "cordis.patch.yml",
+    "locale/**/*.json"
+  ],
+  "meta": {
+    "title": "Native Env v2",
+    "description": "Connect one DSH session to another DSH tool environment with explicit per-session enter/exit and fail-closed transport handling."
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": []
+    },
+    "note": {
+      "rows": "The host half is mounted by ABSOLUTE PATH at the profile plane; the guest half is mounted in the REMOTE machine's own profile.",
+      "discovery": "The browser half needs no bundle entry. `dsh-client-modules` resolves a row's manifest by walking up from the row's module file (see `nearestPackage` in that package), so an absolute-path row pointing at this package is found as long as this manifest declares `dsh.client` and `exports[\"./client\"]` — which is why the deployment shape did not have to change."
+    }
+  },
+  "comment": "Zero npm dependencies. The v2 bundle keeps the legacy env/* wire adapter, adds env2/* negotiation and structured capabilities, and never silently falls back to local tools after a disconnect."
+}

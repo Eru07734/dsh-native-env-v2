@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Native Env v2 public access",
+    "description": "Expose the v2 pairing relay through a temporary public Quick Tunnel; the DSH Web UI remains private."
+  }
+}

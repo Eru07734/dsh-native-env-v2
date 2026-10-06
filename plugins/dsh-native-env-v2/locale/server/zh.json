@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH Native Env v2 服务器",
+    "description": "远端服务器：提供工具目录、Anchor 执行上下文和结构化结果。"
+  }
+}

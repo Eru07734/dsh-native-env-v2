@@ -1,0 +1,32 @@
+# dsh-native-env-v2 bundle patch. The controller is enabled by the profile;
+# the server is a separate, opt-in row for a DSH runtime that should accept calls.
+- insert:
+    - id: native-env-v2
+      # rc.2 discovers browser bundles only from a package-root host row.
+      # The root export is the same controller; /controller remains an alias.
+      name: 'dsh-native-env-v2'
+      config:
+        mode: pairing
+        protocol: auto
+        listen: []
+        peers: []
+        exclude: []
+        maxMessageBytes: 4194304
+        migration: true
+    - id: native-env-v2-server
+      name: 'dsh-native-env-v2/server'
+      disabled: true
+      config:
+        transport: pairing
+        peer: host
+        maxMessageBytes: 4194304
+    - id: native-env-v2-public
+      name: 'dsh-native-env-v2/public'
+      disabled: true
+      config:
+        download: true
+        timeoutMs: 45000
+    - id: native-env-v2-full
+      name: 'dsh-native-env-v2/full'
+      disabled: true
+      config: {}

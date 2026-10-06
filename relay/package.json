@@ -1,0 +1,27 @@
+{
+  "name": "dsh-native-env-relay",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Rendezvous relay for dsh-native-env: pairs two DSH machines by invite and forwards end-to-end encrypted frames it cannot read.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "server.js",
+  "bin": {
+    "dsh-native-env-relay": "./main.js"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "test": "node --test test/"
+  },
+  "files": [
+    "server.js",
+    "main.js",
+    "config.js",
+    "lib/",
+    "README.md"
+  ],
+  "comment": "Zero npm dependencies, like the plugin halves. The relay imports the plugin's own ws.js and relay-protocol.js by RELATIVE PATH rather than depending on the plugin package, so one copy of the framing and one copy of the message contract are what is deployed and tested. The Dockerfile preserves that layout."
+}

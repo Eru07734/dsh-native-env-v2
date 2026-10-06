@@ -1,0 +1,18 @@
+# Windows example: change the package directory to your installed location.
+# On Linux use a package path such as /opt/dsh-plugins/dsh-native-env-v2.
+# The root package entry is needed for browser component discovery in rc.2.
+- insert:
+    - id: native-env-v2
+      name: 'C:/dsh-plugins/dsh-native-env-v2'
+      config:
+        mode: pairing
+        protocol: auto
+        relayUrls:
+          - 'wss://relay.example.com/v2/relay'
+        listen: []
+        peers: []
+        exclude: []
+        maxMessageBytes: 4194304
+        migration: true
+# Use ws://127.0.0.1:8931/v2/relay only for a relay on this machine.
+# Public/full components are opt-in; see the bundle's cordis.patch.yml.

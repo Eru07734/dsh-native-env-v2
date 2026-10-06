@@ -1,0 +1,15 @@
+# Mount on the machine whose DSH tools should be offered to the controller.
+# Change the path to your installed package directory.
+- insert:
+    - id: native-env-v2-server
+      name: 'C:/dsh-plugins/dsh-native-env-v2/lib/guest.js'
+      config:
+        transport: pairing
+        peer: remote
+        relayUrls:
+          - 'wss://relay.example.com/v2/relay'
+        maxResultBytes: 262144
+        maxMessageBytes: 4194304
+        autoReconnect: true
+# Open the Native Env settings to join an invitation or a device card.
+# For an SSH stdio guest use guest-install.sh and the dedicated env profile.
