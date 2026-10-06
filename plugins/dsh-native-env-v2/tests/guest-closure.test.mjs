@@ -245,6 +245,7 @@ test('the standalone runner\'s checked paths exist, in the directory it names', 
   const listed = [...match[1].matchAll(/'([^']+)'/g)].map((entry) => entry[1]).sort()
   assert.deepEqual(listed, [...closureOf('guest.js').map((name) => `lib\\${name}`), `bin\\${LAUNCHER}`].sort())
   for (const entry of listed) {
-    assert.ok(existsSync(join(PLUGIN, entry)), `${entry} does not exist under the plugin directory`)
+    // The PowerShell list uses Windows separators even when CI runs on POSIX.
+    assert.ok(existsSync(join(PLUGIN, ...entry.split('\\'))), `${entry} does not exist under the plugin directory`)
   }
 })

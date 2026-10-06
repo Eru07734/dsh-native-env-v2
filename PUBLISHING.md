@@ -28,6 +28,7 @@
 - systemd 的安装目录、工作目录和入口统一为 v2，并移除与 V8 JIT 冲突的 `MemoryDenyWriteExecute` 设置。
 - QR 独立比对依赖固定为开发依赖 `qrcode@1.5.4`，运行时代码保持零外部依赖。
 - 添加跨平台测试入口，避免 shell 通配符差异。
+- 修正 guest 安装闭包测试在 Linux 上解析 PowerShell 相对路径时的分隔符处理。
 
 ## 验证范围
 
